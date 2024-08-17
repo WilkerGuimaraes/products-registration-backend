@@ -8,9 +8,10 @@ datasource db {
 }
 
 model Product {
-  id    String  @id @default(cuid())
-  name  String
-  price Decimal @db.Decimal(10, 2)
+  id        String   @id @default(cuid())
+  name      String
+  price     Decimal  @db.Decimal(10, 2)
+  createdAt DateTime @default(now())
 
   @@map("produtos")
 }

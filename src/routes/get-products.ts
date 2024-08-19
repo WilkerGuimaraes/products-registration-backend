@@ -1,6 +1,8 @@
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
+
 import { prisma } from "../lib/prisma";
+import { ClientError } from "../errors/client-error";
 
 export async function getProducts(app: FastifyInstance) {
   app.get("/products/:page", async (request, reply) => {
@@ -20,6 +22,10 @@ export async function getProducts(app: FastifyInstance) {
       take: 20,
       skip: offset,
     });
+
+    if (products.length === 0) {
+      return new ClientError("Bad Request in the URL.");
+    }
 
     return reply.send({ products });
   });

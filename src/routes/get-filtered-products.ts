@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import z from "zod";
 
 import { prisma } from "../lib/prisma";
+import { ClientError } from "../errors/client-error";
 
 export async function getFilteredProducts(app: FastifyInstance) {
   app.get("/products/search", async (request, reply) => {
@@ -29,6 +30,10 @@ export async function getFilteredProducts(app: FastifyInstance) {
       take: 20,
       skip: offset,
     });
+
+    if (products.length === 0) {
+      return new ClientError("Product not found or not exist.");
+    }
 
     return reply.send({ products });
   });

@@ -16,4 +16,6 @@ app.register(createProduct);
 app.register(getProducts);
 app.register(deleteProduct);
 
-app.listen({ port: 3333 }).then(() => console.log("HTTP server running!"));
+app
+  .listen({ host: "0.0.0.0", port: process.env.PORT ?? 3333 })
+  .then(() => console.log("HTTP server running!"));

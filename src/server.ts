@@ -1,14 +1,17 @@
 import fastify from "fastify";
 import fastifyCors from "@fastify/cors";
+import dotenv from "dotenv";
 
 import { createProduct } from "./routes/create-product";
 import { getProducts } from "./routes/get-products";
 import { deleteProduct } from "./routes/delete-product";
 
+dotenv.config();
+
 const app = fastify();
 
 app.register(fastifyCors, {
-  origin: "*",
+  origin: process.env.FRONTEND_URL,
   methods: ["GET", "POST", "DELETE"],
 });
 
